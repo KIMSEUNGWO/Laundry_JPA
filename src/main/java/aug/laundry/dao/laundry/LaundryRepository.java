@@ -2,15 +2,12 @@ package aug.laundry.dao.laundry;
 
 import aug.laundry.domain.CouponList;
 import aug.laundry.domain.Orders;
-import aug.laundry.domain.QOrdersDetail;
 import aug.laundry.dto.*;
 import aug.laundry.enums.category.Category;
 import aug.laundry.enums.category.Pass;
 import aug.laundry.enums.repair.RepairCategory;
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
