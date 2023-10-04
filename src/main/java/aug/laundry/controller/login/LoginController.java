@@ -32,6 +32,7 @@ public class LoginController {
     private final LoginService loginService;
     private final MemberService memberService;
 
+    // 테스트입니다.
     @GetMapping("/naver_callback")
     public String naverLogin_callback(HttpServletRequest request, Model model, HttpSession session, String state) {
         loginService.naverLogin(request, model, session);
