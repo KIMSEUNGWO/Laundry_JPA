@@ -98,7 +98,7 @@ public class LaundryRepository {
     public Long check(Long memberId, Long ordersDetailId) {
         return query.select(ordersDetail.ordersDetailId)
                 .from(ordersDetail)
-                .where(ordersDetail.memberId.eq(memberId), ordersDetail.ordersId.isNotNull(), ordersDetailId(ordersDetailId))
+                .where(ordersDetail.memberId.eq(memberId), ordersDetail.ordersId.isNull(), ordersDetailId(ordersDetailId))
                 .fetchFirst();
     }
 
