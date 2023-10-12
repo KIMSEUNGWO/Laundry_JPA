@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "COMMON_LAUNDRY")
 @NoArgsConstructor
-@SequenceGenerator(name = "SEQ_COMMON_LAUNDRY", sequenceName = "SEQ_COMMON_LAUNDRY_ID")
+@SequenceGenerator(name = "SEQ_COMMON_LAUNDRY", sequenceName = "SEQ_COMMON_LAUNDRY")
 public class CommonLaundry {
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_COMMON_LAUNDRY")

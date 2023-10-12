@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "SUBSCRIPTION")
-@SequenceGenerator(name = "SEQ_SUBSCRIPTION", sequenceName = "SEQ_SUBSCRIPTION_ID")
+@SequenceGenerator(name = "SEQ_SUBSCRIPTION", sequenceName = "SEQ_SUBSCRIPTION")
 public class Subscription {
 
     @Id

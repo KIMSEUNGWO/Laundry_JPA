@@ -19,7 +19,8 @@ import javax.validation.constraints.*;
 @Table(name = "MEMBER")
 public class Member extends MemberParent {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MEMBER_ID")
+
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MEMBER")
     private Long memberId;
 
     @Column(nullable = false, name = "MEMBER_ACCOUNT")

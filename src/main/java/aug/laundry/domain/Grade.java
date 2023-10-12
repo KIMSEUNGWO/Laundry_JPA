@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "GRADE")
-@SequenceGenerator(name = "SEQ_GRADE", sequenceName = "SEQ_GRADE_ID")
+@SequenceGenerator(name = "SEQ_GRADE", sequenceName = "SEQ_GRADE")
 public class Grade {
 
     @Id
