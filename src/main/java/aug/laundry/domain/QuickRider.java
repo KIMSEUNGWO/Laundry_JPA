@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Table(name = "QUICK_RIDER")
 public class QuickRider extends MemberParent {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MEMBER_ID")
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MEMBER")
     private Long quickRiderId;
 
     @Column(name = "QUICK_RIDER_EMAIL")

@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "PAYMENTINFO")
-@SequenceGenerator(name = "SEQ_PAYMENTINFO", sequenceName = "SEQ_PAYMENTINFO_ID")
+@SequenceGenerator(name = "SEQ_PAYMENTINFO", sequenceName = "SEQ_PAYMENTINFO")
 public class Paymentinfo {
 
     @Id

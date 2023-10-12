@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "POINT")
-@SequenceGenerator(name = "SEQ_POINT", sequenceName = "SEQ_POINT_ID")
+@SequenceGenerator(name = "SEQ_POINT", sequenceName = "SEQ_POINT")
 public class Point {
 
     @Id

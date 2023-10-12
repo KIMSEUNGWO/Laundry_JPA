@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "INSPECTION_IMAGE")
-@SequenceGenerator(name = "SEQ_INSPECTION_IMAGE", sequenceName = "SEQ_INSPECTION_IMAGE_ID")
+@SequenceGenerator(name = "SEQ_INSPECTION_IMAGE", sequenceName = "SEQ_INSPECTION_IMAGE")
 public class InspectionImage {
 
     @Id

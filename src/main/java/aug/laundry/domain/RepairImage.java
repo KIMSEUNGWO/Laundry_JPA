@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "REPAIR_IMAGE")
 @NoArgsConstructor
-@SequenceGenerator(name = "SEQ_REPAIR_IMAGE", sequenceName = "SEQ_REPAIR_IMAGE_ID")
+@SequenceGenerator(name = "SEQ_REPAIR_IMAGE", sequenceName = "SEQ_REPAIR_IMAGE")
 public class RepairImage {
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_REPAIR_IMAGE")

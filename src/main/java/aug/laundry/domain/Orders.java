@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "ORDERS")
-@SequenceGenerator(name = "SEQ_ORDERS", sequenceName = "SEQ_ORDERS_ID")
+@SequenceGenerator(name = "SEQ_ORDERS", sequenceName = "SEQ_ORDERS")
 public class Orders {
 
     @Id
