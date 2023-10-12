@@ -2,7 +2,7 @@ package aug.laundry.controller;
 
 import aug.laundry.domain.Member;
 import aug.laundry.dto.*;
-import aug.laundry.service.BCryptService_kgw;
+import aug.laundry.commom.BCrypt_kgw;
 import aug.laundry.service.laundry.LaundryService;
 import aug.laundry.service.login.MemberService;
 import aug.laundry.service.MypageService;
@@ -28,7 +28,7 @@ public class MypageController {
   private final MypageService mypageService;
   private final MemberService memberService;
   private final LaundryService laundryService;
-  private final BCryptService_kgw bc;
+  private final BCrypt_kgw bc;
 
   @GetMapping("/{memberId}/mypage")
   public String MypageMain(@PathVariable Long memberId, Model model){

@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "COUPON")
 @SequenceGenerator(name = "SEQ_COUPON", sequenceName = "SEQ_COUPON")
-public class Coupon {
+public class Coupon{
 
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_COUPON")
     private Long couponId;

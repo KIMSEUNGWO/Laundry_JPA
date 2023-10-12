@@ -16,7 +16,7 @@ public interface MemberRepository {
 
     List<Member> checkId(ConfirmIdDto confirm);
 
-    void registerUser(Member member);
+    Member registerUser(Member member);
 
     void update(Long memberId, Member updateMember);
 

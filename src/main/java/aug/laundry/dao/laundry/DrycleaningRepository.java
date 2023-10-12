@@ -1,6 +1,6 @@
 package aug.laundry.dao.laundry;
 
-import aug.laundry.dao.jpaRepository.JpaDrycleaningRepository;
+import aug.laundry.jpaRepository.JpaDrycleaningRepository;
 import aug.laundry.domain.Drycleaning;
 import aug.laundry.dto.OrderDrycleaning;
 import com.querydsl.jpa.impl.JPAQueryFactory;

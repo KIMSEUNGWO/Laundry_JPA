@@ -8,7 +8,7 @@ import aug.laundry.dao.point.PointDao;
 import aug.laundry.domain.*;
 import aug.laundry.dto.*;
 import aug.laundry.service.ApiExamMemberProfile;
-import aug.laundry.service.BCryptService_kgw;
+import aug.laundry.commom.BCrypt_kgw;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -40,7 +40,7 @@ public class LoginServiceImpl_ksw implements LoginService {
     private final LoginRepository loginRepository;
     private final MemberRepository memberRepository;
     private final MemberDao memberDao;
-    private final BCryptService_kgw bc;
+    private final BCrypt_kgw bc;
     private final PointDao pointDao;
 
 
