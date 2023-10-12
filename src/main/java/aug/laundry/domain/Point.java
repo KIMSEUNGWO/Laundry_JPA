@@ -4,8 +4,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -14,7 +17,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "POINT")
 @SequenceGenerator(name = "SEQ_POINT", sequenceName = "SEQ_POINT")
-public class Point {
+@EntityListeners(AuditingEntityListener.class)
+public class Point{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_POINT")
@@ -23,7 +27,9 @@ public class Point {
     private Integer pointStack;
     private Integer pointNow;
     private String pointStackReason;
-    private String pointStackDate;
+
+    @CreatedDate
+    private LocalDateTime pointStackDate;
 
 
 }

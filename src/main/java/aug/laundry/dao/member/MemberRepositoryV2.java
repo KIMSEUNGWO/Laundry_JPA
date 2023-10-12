@@ -1,6 +1,7 @@
 package aug.laundry.dao.member;
 
-import aug.laundry.dao.jpaRepository.JpaMemberRepository;
+import aug.laundry.commom.BCrypt_kgw;
+import aug.laundry.jpaRepository.JpaMemberRepository;
 import aug.laundry.dao.login.LoginMapper;
 import aug.laundry.domain.*;
 import aug.laundry.dto.ConfirmIdDto;
@@ -19,6 +20,7 @@ import java.util.Random;
 import static aug.laundry.domain.QAdmin.*;
 //import static aug.laundry.domain.QMember.*;
 import static aug.laundry.domain.QMember.*;
+import static aug.laundry.domain.QMember.member;
 import static aug.laundry.domain.QQuickRider.*;
 import static aug.laundry.domain.QRider.*;
 
@@ -30,11 +32,13 @@ public class MemberRepositoryV2 implements MemberRepository {
     private final LoginMapper loginMapper; // mybatis
     private final JpaMemberRepository jpaMemberRepository; // jpa
     private final JPAQueryFactory query;
+    private final BCrypt_kgw bc;
 
-    public MemberRepositoryV2(LoginMapper loginMapper, JpaMemberRepository jpaMemberRepository, EntityManager em) {
+    public MemberRepositoryV2(LoginMapper loginMapper, JpaMemberRepository jpaMemberRepository, BCrypt_kgw bc, EntityManager em) {
         this.loginMapper = loginMapper;
         this.jpaMemberRepository = jpaMemberRepository;
         this.query = new JPAQueryFactory(em);
+        this.bc = bc;
     }
 
     @Override
@@ -88,15 +92,29 @@ public class MemberRepositoryV2 implements MemberRepository {
 
 
     @Override
-    public void registerUser(Member member) {
-        jpaMemberRepository.save(member);
+    public Member registerUser(Member member) {
+        // 비밀번호 암호화
+        String password = bc.encodeBCrypt(member.getPassword());
+        member.setPassword(password);
+
+        // 핸드폰 번호 형식 수정(예 : 010-1234-5678 -> 01012345678)
+        String memberPhone = member.getMemberPhone().replace("-","");
+        member.setMemberPhone(memberPhone);
+
+        // 추천인 코드 생성후 DB에 저장
+        String inviteCode = getInviteCode();
+        member.setMemberMyInviteCode(inviteCode);
+
+        Member saveMember = jpaMemberRepository.save(member);
+        return saveMember;
     }
 
     @Override
     public void update(Long memberId, Member updateMember) {
         Member findMember = jpaMemberRepository.findById(memberId).orElseThrow();
+
         if (updateMember.getPassword() != null){
-            findMember.setPassword(updateMember.getPassword());
+            findMember.setPassword(bc.encodeBCrypt(updateMember.getPassword()));
         }
         if (updateMember.getMemberAddress() != null){
             findMember.setMemberAddress(updateMember.getMemberAddress());

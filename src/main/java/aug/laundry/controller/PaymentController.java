@@ -179,17 +179,8 @@ public class PaymentController {
 
     private void addBonusPoint(Long finalPrice, Long memberId) {
         MemberShip memberShip = memberService.isPass(memberId);
-        Pass pass = memberShip.getCheck();
-
-        Long bonusPoint = null;
-
-        if(pass == Pass.PASS){
-            bonusPoint = memberShip.applyPoint(finalPrice);
-            paymentService.addBonusPoint(memberId, bonusPoint);
-        } else {
-            bonusPoint = memberShip.applyPoint(finalPrice);
-            paymentService.addBonusPoint(memberId, bonusPoint);
-        }
+        Long bonusPoint = memberShip.applyPoint(finalPrice);
+        paymentService.addBonusPoint(memberId, bonusPoint);
     }
 
     private Paymentinfo makePaymentinfoFromIamPort(IamportClient iamportClient, String impUid, String restApi, String restApiSecret, Long memberId) throws IamportResponseException, IOException {

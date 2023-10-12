@@ -1,10 +1,9 @@
 package aug.laundry.dao.laundry;
 
-import aug.laundry.dao.jpaRepository.JpaRepairImageRepository;
-import aug.laundry.dao.jpaRepository.JpaRepairRepository;
+import aug.laundry.jpaRepository.JpaRepairImageRepository;
+import aug.laundry.jpaRepository.JpaRepairRepository;
 import aug.laundry.domain.Repair;
 import aug.laundry.domain.RepairImage;
-import aug.laundry.dto.InsertRepairDto;
 import aug.laundry.enums.repair.RepairCategory;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;

@@ -1,10 +1,9 @@
 package aug.laundry.dao.laundry;
 
-import aug.laundry.dao.jpaRepository.JpaOrdersDetailRepository;
+import aug.laundry.jpaRepository.JpaOrdersDetailRepository;
 import aug.laundry.domain.*;
 import aug.laundry.dto.*;
 import aug.laundry.enums.category.Category;
-import aug.laundry.enums.category.Pass;
 import aug.laundry.enums.repair.RepairCategory;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;

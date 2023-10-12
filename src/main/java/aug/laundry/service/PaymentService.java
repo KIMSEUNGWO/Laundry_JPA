@@ -214,7 +214,7 @@ public class PaymentService {
 
     @Transactional
     public void addBonusPoint(Long memberId, Long pointStack){
-        int result = pointDao.addBonusPoint(memberId, pointStack);
+        int result = pointDao.addPoint(memberId, Math.toIntExact(pointStack), "포인트 적립");
 
         if(result == 0){
             throw new IllegalArgumentException("추가 포인트가 저장되지 않았습니다.");
