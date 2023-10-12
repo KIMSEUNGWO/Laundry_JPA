@@ -367,7 +367,7 @@ public class LoginServiceImpl_ksw implements LoginService {
     }
 
     @Override
-    public Member checkUserWithSessionId(String sessionId) {
+    public Optional<Member> checkUserWithSessionId(String sessionId) {
         return loginRepository.checkUserWithSessionId(sessionId);
     }
 
