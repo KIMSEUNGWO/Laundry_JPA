@@ -21,7 +21,7 @@ public interface LoginService {
 
     int keepLogin(String sessionId, Date limit, Long memberId);
 
-    Member checkUserWithSessionId(String sessionId);
+    Optional<Member> checkUserWithSessionId(String sessionId);
 
     int renewLoginTime (Long memberId);
 

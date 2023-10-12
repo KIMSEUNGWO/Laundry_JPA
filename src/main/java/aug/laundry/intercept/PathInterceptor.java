@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -30,9 +31,9 @@ public class PathInterceptor implements HandlerInterceptor {
             Cookie loginCookie = WebUtils.getCookie(request,"loginCookie");
             if(loginCookie != null){
                 String sessionId = loginCookie.getValue();
-                Member memberDto = loginService.checkUserWithSessionId(sessionId);
-                if(memberDto != null){
-                    session.setAttribute(SessionConstant.LOGIN_MEMBER, memberDto.getMemberId());
+                Optional<Member> memberDto = loginService.checkUserWithSessionId(sessionId);
+                if(memberDto.isPresent()){
+                    session.setAttribute(SessionConstant.LOGIN_MEMBER, memberDto.get().getMemberId());
                     return true;
                 }
             }

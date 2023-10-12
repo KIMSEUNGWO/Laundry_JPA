@@ -229,10 +229,10 @@ public class LoginController {
     @GetMapping
     public String goLogin(HttpServletRequest request, @CookieValue(name = "loginCookie", required = false) Cookie loginCookie){
         if(loginCookie != null){
-            Member findMember = loginService.checkUserWithSessionId(loginCookie.getValue());
-            if(findMember != null){
+            Optional<Member> findMember = loginService.checkUserWithSessionId(loginCookie.getValue());
+            if(findMember.isPresent()){
                 HttpSession session = request.getSession();
-                session.setAttribute(SessionConstant.LOGIN_MEMBER, findMember.getMemberId());
+                session.setAttribute(SessionConstant.LOGIN_MEMBER, findMember.get().getMemberId());
                 return "redirect:/";
             }
         }

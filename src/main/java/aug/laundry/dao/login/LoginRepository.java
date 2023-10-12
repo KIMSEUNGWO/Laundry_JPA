@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.sql.Date;
+import java.util.Optional;
 
 import static aug.laundry.domain.QMember.*;
 import static aug.laundry.domain.QSocialUniqueNum.socialUniqueNum;
@@ -60,8 +61,8 @@ public class LoginRepository{
     }
 
     @Transactional
-    public Member checkUserWithSessionId(String sessionId){
-        return jpaMemberRepository.findBySessionId(sessionId).get();
+    public Optional<Member> checkUserWithSessionId(String sessionId){
+        return jpaMemberRepository.findBySessionId(sessionId);
     }
 
     public int renewLoginTime (Long memberId){return loginMapper.renewLoginTime(memberId);}
