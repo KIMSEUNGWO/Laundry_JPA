@@ -11,6 +11,7 @@ import aug.laundry.enums.category.Pass;
 import aug.laundry.service.laundry.LaundryService;
 import aug.laundry.service.OrdersService_kdh;
 import aug.laundry.service.PaymentService;
+import aug.laundry.service.login.MemberService;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -43,15 +44,17 @@ public class PaymentController {
     private OrdersService_kdh ordersServiceKdh;
     private PaymentDao paymentDao;
 
-    private LaundryService laundryService;
+    private final LaundryService laundryService;
+    private final MemberService memberService;
 
     @Autowired
     public PaymentController(PaymentService paymentService, OrdersService_kdh ordersService_kdh,
-                             PaymentDao paymentDao, LaundryService laundryService) {
+                             PaymentDao paymentDao, LaundryService laundryService, MemberService memberService) {
         this.paymentService = paymentService;
         this.ordersServiceKdh = ordersService_kdh;
         this.paymentDao = paymentDao;
         this.laundryService = laundryService;
+        this.memberService = memberService;
     }
 
 
@@ -175,7 +178,7 @@ public class PaymentController {
     }
 
     private void addBonusPoint(Long finalPrice, Long memberId) {
-        MemberShip memberShip = laundryService.isPass(memberId);
+        MemberShip memberShip = memberService.isPass(memberId);
         Pass pass = memberShip.getCheck();
 
         Long bonusPoint = null;

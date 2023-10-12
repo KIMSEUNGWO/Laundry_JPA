@@ -3,6 +3,7 @@ package aug.laundry.dao.member;
 import aug.laundry.domain.Member;
 import aug.laundry.domain.MemberParent;
 import aug.laundry.dto.ConfirmIdDto;
+import aug.laundry.enums.category.Pass;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,4 +29,6 @@ public interface MemberRepository {
 
     String getInviteCode();
     boolean inviteCodeCheck(String inviteCode);
+
+    Pass isPass(Long memberId);
 }

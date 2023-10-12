@@ -4,7 +4,7 @@ import aug.laundry.commom.SessionConstant;
 import aug.laundry.domain.Orders;
 import aug.laundry.domain.Rider;
 import aug.laundry.dto.OrdersEnum;
-import aug.laundry.service.FileUploadService_ksh;
+import aug.laundry.service.FileUploadService;
 import aug.laundry.service.RiderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import java.util.Map;
 public class RiderRestController {
 
     private final RiderService riderService;
-    private final FileUploadService_ksh fileUpload;
+    private final FileUploadService fileUpload;
 
     @GetMapping("/region/list/{ordersAddress}/{presentStatus}")
     public Map<String, Object> list(@PathVariable("ordersAddress")String ordersAddress, @PathVariable("presentStatus")String presentStatus, @SessionAttribute(name = SessionConstant.LOGIN_MEMBER, required = false) Long memberId){

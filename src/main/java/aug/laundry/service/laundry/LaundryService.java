@@ -1,6 +1,7 @@
 package aug.laundry.service.laundry;
 
 import aug.laundry.domain.Member;
+import aug.laundry.domain.OrdersDetail;
 import aug.laundry.dto.*;
 import aug.laundry.enums.category.Category;
 import aug.laundry.enums.category.MemberShip;
@@ -25,17 +26,10 @@ public interface LaundryService {
 
     List<RepairCategory> getRepair(Long memberId, Long ordersDetailId);
 
-    MemberShip isPass(Long memberId);
 
     Long update(Long memberId, Long couponListId, OrderPost orderPost, Long ordersDetailId);
 
     void check(Long memberId, HttpSession session);
-
-    boolean insertDrycleaning(Long memberId, Long ordersDetailId, Map<String, Integer> result, HashMap<String, Boolean> resultMap);
-
-    List<OrderDrycleaning> reloadDrycleaning(Long orderDetailId);
-
-    List<OrderRepair> reloadRepair(Long orderDetailId);
 
     Map<Long, List<String>> getRepairImage(List<OrderRepair> reload);
 
@@ -47,13 +41,13 @@ public interface LaundryService {
 
     OrderInfo orderInfo(Model model);
 
-    List<Long> findByRepairId(Long ordersDetailId);
 
     void removeRepair(Long ordersDetailId);
 
-    void removeRepairImages(Long repairId);
-
-    void removeRepairImagesFile(Long repairId);
 
     Optional<Member> checkAddress(Long memberId);
+
+    OrdersDetail createOrdersDetail(Long memberId);
+
+    void checkOrder(Long ordersDetailId, String option, List<String> service);
 }

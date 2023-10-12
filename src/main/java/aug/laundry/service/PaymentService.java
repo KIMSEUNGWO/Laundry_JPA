@@ -14,6 +14,7 @@ import aug.laundry.enums.category.MemberShip;
 import aug.laundry.enums.category.Pass;
 import aug.laundry.exception.IsNotValidException;
 import aug.laundry.service.laundry.LaundryService;
+import aug.laundry.service.login.MemberService;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ public class PaymentService {
     private final OrdersDao ordersDao;
     private final OrdersService_kdh ordersServiceKdh;
     private final LaundryService laundryService;
+    private final MemberService memberService;
 
 
     public Map<String, Long> makePrices(Long ordersId, Long memberId){
@@ -58,7 +60,7 @@ public class PaymentService {
 
         Long totalPriceWithDeliveryPrice = deliveryPrice + totalPrice;
 
-        MemberShip memberShip = laundryService.isPass(memberId);
+        MemberShip memberShip = memberService.isPass(memberId);
         Pass pass = memberShip.getCheck();
 
         Long totalPriceWithPassApplied = null;

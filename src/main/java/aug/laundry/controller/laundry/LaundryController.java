@@ -6,6 +6,7 @@ import aug.laundry.enums.category.*;
 import aug.laundry.enums.repair.RepairCategory;
 import aug.laundry.service.laundry.LaundryService;
 import aug.laundry.service.RiderService;
+import aug.laundry.service.login.MemberService;
 import aug.laundry.validator.OrderPostValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,7 @@ public class LaundryController {
     private final LaundryService laundryService;
     private final OrderPostValidator orderPostValidator;
     private final RiderService riderService;
+    private final MemberService memberService;
 
     @InitBinder("orderPost")
     public void init(WebDataBinder dataBinder) {
@@ -39,7 +41,7 @@ public class LaundryController {
     @GetMapping("/order")
     public String order(@SessionAttribute(name = SessionConstant.LOGIN_MEMBER, required = false) Long memberId, Model model) {
 
-        MemberShip memberShip = laundryService.isPass(memberId); // 패스 확인
+        MemberShip memberShip = memberService.isPass(memberId); // 패스 확인
 
         Long ordersDetailId = (Long) model.getAttribute("ordersDetailId");
 

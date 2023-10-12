@@ -36,7 +36,7 @@ settings.gradle
 !src/
 application.properties
 src/main/generated/**
-
+src/main/resources/static/images/**
 .DS_Store
 
 

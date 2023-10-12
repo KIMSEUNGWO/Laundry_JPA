@@ -128,10 +128,10 @@ public class OrdersService_kdh {
     private static List<RepairResponseDto> mapToRepairResponseDto(List<Repair> repairList) {
         return repairList.stream()
                 .map(repair -> new RepairResponseDto(
-                        aug.laundry.enums.repair.RepairCategory.valueOf(repair.getRepairCategory()),
+                        aug.laundry.enums.repair.RepairCategory.valueOf(repair.getRepairCategory().name()),
                         repair.getRepairPossibility(),
                         repair.getRepairNotReason(),
-                        aug.laundry.enums.repair.RepairCategory.valueOf(repair.getRepairCategory()).getPrice()
+                        aug.laundry.enums.repair.RepairCategory.valueOf(repair.getRepairCategory().name()).getPrice()
                 )).collect(Collectors.toList());
     }
 

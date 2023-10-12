@@ -1,5 +1,6 @@
 package aug.laundry.dao.login;
 
+import aug.laundry.dao.jpaRepository.JpaMemberRepository;
 import aug.laundry.domain.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;

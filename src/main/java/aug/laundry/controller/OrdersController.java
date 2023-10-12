@@ -8,6 +8,7 @@ import aug.laundry.enums.category.MemberShip;
 import aug.laundry.enums.category.Pass;
 import aug.laundry.service.laundry.LaundryService;
 import aug.laundry.service.OrdersService_kdh;
+import aug.laundry.service.login.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ public class OrdersController {
     private final OrdersService_kdh ordersServiceKdh;
     private final LaundryService laundryService;
     private final MemberMapper memberMapper;
+    private final MemberService memberService;
 
     @GetMapping
     public String orders(Model model, @SessionAttribute(name = SessionConstant.LOGIN_MEMBER, required = false)Long memberId){
@@ -67,7 +69,7 @@ public class OrdersController {
         if(memberId != ordersResponseDto.getMemberId()){
             throw new IllegalStateException("비정상적인 요청입니다. (결제회원과 로그인회원이 일치하지않음)");
         }
-        MemberShip memberShip = laundryService.isPass(memberId);
+        MemberShip memberShip = memberService.isPass(memberId);
         Pass pass = memberShip.getCheck();
 
         MemberDto member = memberMapper.selectOne(memberId); // 멤버아이디 바꾸기

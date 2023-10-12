@@ -2,7 +2,7 @@ package aug.laundry.dao;
 
 import aug.laundry.dto.FileUploadDto;
 import aug.laundry.enums.fileUpload.FileUploadType;
-import aug.laundry.service.FileUploadService_ksh;
+import aug.laundry.service.FileUploadService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class FileTest {
     private FileUploadMapper fileUploadMapper;
 
     @Autowired
-    private FileUploadService_ksh fileUploadService;
+    private FileUploadService fileUploadService;
 
     @Test
     public void fileSaveTest() {
