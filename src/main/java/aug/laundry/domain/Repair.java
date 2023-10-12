@@ -14,9 +14,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "REPAIR")
+@SequenceGenerator(name = "SEQ_REPAIR", sequenceName = "SEQ_REPAIR_ID")
 public class Repair {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_REPAIR_ID")
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_REPAIR")
     private Long repairId;
 
     private Long ordersDetailId;
