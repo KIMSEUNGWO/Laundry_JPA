@@ -13,9 +13,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "REPAIR_IMAGE")
 @NoArgsConstructor
+@SequenceGenerator(name = "SEQ_REPAIR_IMAGE", sequenceName = "SEQ_REPAIR_IMAGE_ID")
 public class RepairImage {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_REPAIR_IMAGE_ID")
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_REPAIR_IMAGE")
     private Long repairImageId;
     private Long repairId;
     private String repairImageUploadName;

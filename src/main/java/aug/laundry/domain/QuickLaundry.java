@@ -13,9 +13,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "QUICK_LAUNDRY")
 @NoArgsConstructor
+@SequenceGenerator(name = "SEQ_QUICK_LAUNDRY", sequenceName = "SEQ_QUICK_LAUNDRY_ID")
 public class QuickLaundry {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_QUICK_LAUNDRY")
     private Long quickLaundryId;
     private String quickLaundryTakeDate;
     private Long ordersDetailId;

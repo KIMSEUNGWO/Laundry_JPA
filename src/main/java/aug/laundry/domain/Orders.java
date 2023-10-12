@@ -1,14 +1,23 @@
 package aug.laundry.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import javax.persistence.*;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@Entity
+@Table(name = "ORDERS")
+@SequenceGenerator(name = "SEQ_ORDERS", sequenceName = "SEQ_ORDERS_ID")
 public class Orders {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ORDERS")
     private Long ordersId;
     private Long memberId;
     private String ordersDate;
@@ -27,6 +36,4 @@ public class Orders {
     private String ordersReturnDate;
     private Long pointId;
 
-    public Orders() {
-    }
 }

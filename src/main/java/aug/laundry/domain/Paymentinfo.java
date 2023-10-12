@@ -1,14 +1,23 @@
 package aug.laundry.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import javax.persistence.*;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@Entity
+@Table(name = "PAYMENTINFO")
+@SequenceGenerator(name = "SEQ_PAYMENTINFO", sequenceName = "SEQ_PAYMENTINFO_ID")
 public class Paymentinfo {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PAYMENTINFO")
     private Long paymentinfoId;
     private Long memberId;
     private String impUid;
