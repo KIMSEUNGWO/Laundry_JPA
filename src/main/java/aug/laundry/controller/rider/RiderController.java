@@ -8,7 +8,7 @@ import aug.laundry.dto.DongInfoDto;
 import aug.laundry.dto.OrdersEnum;
 import aug.laundry.enums.fileUpload.FileUploadType;
 import aug.laundry.enums.orderStatus.routineOrder;
-import aug.laundry.service.FileUploadService_ksh;
+import aug.laundry.service.FileUploadService;
 import aug.laundry.service.RiderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,15 +25,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
-import static aug.laundry.enums.orderStatus.routineOrder.regionList;
-
 @Controller
 @RequiredArgsConstructor
 @Slf4j
 public class RiderController {
 
     private final RiderService riderService;
-    private final FileUploadService_ksh fileUpload;
+    private final FileUploadService fileUpload;
 
     @GetMapping("/ride/wait")
     public String waitList(Model model, HttpServletRequest request) {

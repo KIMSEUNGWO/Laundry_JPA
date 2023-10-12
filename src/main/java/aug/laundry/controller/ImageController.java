@@ -22,4 +22,12 @@ public class ImageController {
         log.info("getImage Controller ");
         return Files.readAllBytes(resource.getFile().toPath());
     }
+
+    @GetMapping("/images/repair_images/{imageName}")
+    @ResponseBody
+    public byte[] getRepairImage(@PathVariable String imageName) throws IOException {
+        Resource resource = new ClassPathResource("static/images/repair_images/" + imageName);
+        log.info("getImage Controller ");
+        return Files.readAllBytes(resource.getFile().toPath());
+    }
 }

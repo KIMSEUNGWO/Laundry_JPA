@@ -1,4 +1,4 @@
-package aug.laundry.dao.login;
+package aug.laundry.dao.jpaRepository;
 
 import aug.laundry.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

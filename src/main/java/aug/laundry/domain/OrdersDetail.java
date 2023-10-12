@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Table(name = "ORDERS_DETAIL")
 public class OrdersDetail {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ORDERS_DETAIL_ID")
     private Long ordersDetailId;
     private Long ordersId;
     private Long inspectionId;

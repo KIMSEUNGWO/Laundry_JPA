@@ -1,6 +1,7 @@
 package aug.laundry.service.login;
 
 import aug.laundry.domain.Member;
+import aug.laundry.enums.category.MemberShip;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface MemberService {
     void updateAddress(Long memberId, Member member);
     boolean getPhoneCnt(String memberPhone);
     boolean inviteCodeCheck(String inviteCode);
+
+    MemberShip isPass(Long memberId);
 }

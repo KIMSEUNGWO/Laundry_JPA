@@ -48,7 +48,7 @@ window.addEventListener('load', function(){
             document.querySelector('#common_laundry').checked = true;
         } else {
             document.querySelector('#commonBtn svg').style.fill = ''
-            document.querySelector('#common_laundry').checked = true;
+            document.querySelector('#common_laundry').checked = false;
         }
 
     })

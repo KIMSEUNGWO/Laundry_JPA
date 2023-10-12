@@ -6,6 +6,7 @@ import aug.laundry.dao.point.PointDao;
 import aug.laundry.domain.Member;
 import aug.laundry.domain.MemberParent;
 import aug.laundry.dto.ConfirmIdDto;
+import aug.laundry.enums.category.MemberShip;
 import aug.laundry.service.ApiExamMemberProfile;
 import aug.laundry.service.BCryptService_kgw;
 import lombok.RequiredArgsConstructor;
@@ -126,6 +127,11 @@ public class MemberServiceImpl_ksw implements MemberService {
     @Override
     public boolean inviteCodeCheck(String inviteCode) {
         return memberRepository.inviteCodeCheck(inviteCode);
+    }
+
+    @Override
+    public MemberShip isPass(Long memberId) {
+        return new MemberShip(memberRepository.isPass(memberId));
     }
 
 

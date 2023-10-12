@@ -118,7 +118,6 @@ function findByErrorDiv(fileInputTag){
 
 function apiFetchFile(url, params) {
 
-    return new Promise( (resolve, reject) => {
         fetch(url, {
             method: "POST",
             headers: {"X-Requested-With": "XMLHttpRequest"},
@@ -134,15 +133,11 @@ function apiFetchFile(url, params) {
         })
         .then(res => {
             callback(res); // 함수 실행
-            resolve();
         })
         .catch((error) => {
             console.log(error);
 //            alert("에러가 발생했습니다. \r\n관리자에게 문의해주십시오.");
-            reject();
         });
-
-    })
 
 }
 
@@ -150,7 +145,7 @@ function callback(map){
     return new Promise((resolve, reject) => {
             // 비어있을때 선택해제
             if (map.empty){
-                opener.document.querySelector('#repair').checked = true;
+                opener.document.querySelector('#repair').checked = false;
                 opener.document.querySelector('#repairBtn svg').style.fill = ''
                 opener.document.querySelector('#repairBtn').classList.remove('select1');
             } else {

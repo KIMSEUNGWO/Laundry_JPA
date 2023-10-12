@@ -1,7 +1,7 @@
 package aug.laundry.dao.laundry;
 
-import aug.laundry.domain.CouponList;
-import aug.laundry.domain.Orders;
+import aug.laundry.dao.jpaRepository.JpaOrdersDetailRepository;
+import aug.laundry.domain.*;
 import aug.laundry.dto.*;
 import aug.laundry.enums.category.Category;
 import aug.laundry.enums.category.Pass;
@@ -20,7 +20,12 @@ import java.net.URLDecoder;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static aug.laundry.domain.QCommonLaundry.commonLaundry;
+import static aug.laundry.domain.QDrycleaning.drycleaning;
 import static aug.laundry.domain.QOrdersDetail.*;
+import static aug.laundry.domain.QQuickLaundry.quickLaundry;
+import static aug.laundry.domain.QRepair.repair;
+import static aug.laundry.domain.QRepairImage.repairImage;
 
 @Slf4j
 @Repository
@@ -69,9 +74,6 @@ public class LaundryRepository {
         return laundryMapper.getRepair(memberId, ordersDetailId).stream().map(x -> RepairCategory.valueOf(x)).collect(Collectors.toList());
     }
 
-    public Pass  isPass(Long memberId) {
-        return laundryMapper.isPass(memberId) == null ? Pass.COMMON : Pass.PASS;
-    }
 
     public boolean validCoupon(Long memberId, Long couponListId) {
         if (couponListId == null) return false;
@@ -96,10 +98,12 @@ public class LaundryRepository {
     }
 
     public Long check(Long memberId, Long ordersDetailId) {
-        return query.select(ordersDetail.ordersDetailId)
+        Long findOrdersDetailId = query.select(ordersDetail.ordersDetailId)
                 .from(ordersDetail)
                 .where(ordersDetail.memberId.eq(memberId), ordersDetail.ordersId.isNull(), ordersDetailId(ordersDetailId))
                 .fetchFirst();
+        log.info("orders_detail_id = {}", findOrdersDetailId);
+        return findOrdersDetailId;
     }
 
     private BooleanExpression ordersDetailId(Long ordersDetailId) {
@@ -109,69 +113,55 @@ public class LaundryRepository {
         return null;
     }
 
-    @Transactional
     public void removeOrdersDetail(Long ordersDetailId) {
-        laundryMapper.removeDrycleaning(ordersDetailId); // 드라이클리닝 장바구니 삭제
-        log.info("remove Drycleaning");
-        laundryMapper.removeCommon(ordersDetailId); // 생활빨래 장바구니 삭제
-        log.info("remove Common");
-        List<Long> repairIdAll = laundryMapper.getRepairId(ordersDetailId);
-        for (Long repairId : repairIdAll) {
-            List<String> repairImageStoreNames = laundryMapper.getRepairImageStoreName(repairId); // 실제 이미지 파일 삭제
-            System.out.println("repairImageStoreNames = " + repairImageStoreNames);
-            removeRepairImageFile(repairImageStoreNames);
-            laundryMapper.removeRepairImages(repairId); // RepairImage DB에서 삭제
-        }
-        log.info("remove RepairImage");
-        laundryMapper.removeRepair(ordersDetailId); // 수선 장바구니 삭제
-        log.info("remove Repair");
-        laundryMapper.removeQuickLaundry(ordersDetailId);
-        log.info("remove QuickLaundry");
-        laundryMapper.removeOrdersDetail(ordersDetailId); // 장바구니 삭제
-        log.info("remove OrdersDetail");
+        query.delete(ordersDetail).where(ordersDetail.ordersDetailId.eq(ordersDetailId)).execute();
+        log.info("Removed OrdersDetail");
     }
 
-    private void removeRepairImageFile(List<String> repairImageStoreNames) {
+    public void removeRepairImageFile(List<RepairImage> repairImageStoreNames) {
         // 실제저장된 Repair Image 파일 삭제
-        for (String storeName : repairImageStoreNames) {
-            String srcFileName = URLDecoder.decode(directory + storeName);
-            System.out.println("srcFileName = " + srcFileName);
-            File file = new File(srcFileName);
-            boolean delete = file.delete();
+        for (RepairImage repairImage : repairImageStoreNames) {
+            String repairImageStoreName = repairImage.getRepairImageStoreName();
+            if (repairImageStoreName != null) {
+                String srcFileName = URLDecoder.decode(directory + repairImageStoreName);
+                File file = new File(srcFileName);
+                boolean delete = file.delete();
+                log.info("Removed srcFileName = {}", srcFileName);
+            }
         }
     }
 
-    public void createOrdersDetail(Long memberId) {
-        laundryMapper.createOrdersDetail(memberId);
-    }
-
-    public void insertDryCleaning(Long ordersDetailId, Category category) {
-        laundryMapper.insertDryCleaning(ordersDetailId, category.name());
+    public OrdersDetail createOrdersDetail(Long memberId) {
+        OrdersDetail newOrdersDetail = new OrdersDetail();
+        newOrdersDetail.setMemberId(memberId);
+        OrdersDetail saveOrdersDetail = jpaOrdersDetailRepository.save(newOrdersDetail);
+        return saveOrdersDetail;
     }
 
     public void removeDryCleaning(Long ordersDetailId) {
-        laundryMapper.removeDrycleaning(ordersDetailId);
+        query.delete(drycleaning).where(drycleaning.ordersDetailId.eq(ordersDetailId)).execute();
+        log.info("Removed Drycleaning");
     }
 
     public void removeRepair(Long ordersDetailId) {
-        laundryMapper.removeRepair(ordersDetailId);
+        query.delete(repair).where(repair.ordersDetailId.eq(ordersDetailId)).execute();
+        log.info("Removed Repair");
     }
     public void removeCommon(Long ordersDetailId) {
-        laundryMapper.removeCommon(ordersDetailId);
+        query.delete(commonLaundry).where(commonLaundry.ordersDetailId.eq(ordersDetailId)).execute();
+        log.info("Removed Common");
     }
 
-    public List<OrderDrycleaning> reloadDrycleaning(Long orderDetailId) {
-        List<OrderDrycleaning> result = laundryMapper.reloadDrycleaning(orderDetailId);
-        if (result == null || result.isEmpty()) return null;
-        return result;
-    }
 
     public List<OrderRepair> reloadRepair(Long orderDetailId) {
         return laundryMapper.reloadRepair(orderDetailId);
     }
 
-    public List<String> getRepairImage(Long repairId) {
-        return laundryMapper.getRepairImage(repairId);
+    public List<RepairImage> getRepairImage(Long repairId) {
+        return query.select(repairImage)
+                .from(repairImage)
+                .where(repairImage.repairId.eq(repairId))
+                .fetch();
     }
 
     public Long insertRepair(Long ordersDetailId, Map<String, RepairFormData> repairData, List<MultipartFile> files) {
@@ -187,8 +177,11 @@ public class LaundryRepository {
         return null;
     }
 
-    public List<Long> getRepairId(Long ordersDetailId) {
-        return laundryMapper.getRepairId(ordersDetailId);
+    public List<Repair> getRepairId(Long ordersDetailId) {
+        return query.select(repair)
+                .from(repair)
+                .where(repair.ordersDetailId.eq(ordersDetailId))
+                .fetch();
     }
 
     public void insertCommon(Long ordersDetailId) {
@@ -212,18 +205,20 @@ public class LaundryRepository {
     }
 
     public void removeRepairImages(Long repairId) {
-        laundryMapper.removeRepairImages(repairId);
+        query.delete(repairImage).where(repairImage.repairId.eq(repairId)).execute();
+        log.info("Removed RepairImage");
     }
 
-    public void removeRepairImagesFile(Long repairId) {
-        List<String> repairImageStoreNames = laundryMapper.getRepairImageStoreName(repairId); // 실제 이미지 파일 삭제
-        System.out.println("repairImageStoreNames = " + repairImageStoreNames);
-        removeRepairImageFile(repairImageStoreNames);
-    }
-  
    public List<MyCoupon> getCoupon2(Long memberId) {
         List<MyCoupon> coupon = laundryMapper.getCoupon2(memberId);
         log.info("getCoupon2={}", coupon);
         return coupon;
     }
+
+    public void removeQuickLaundry(Long ordersDetailId) {
+        query.delete(quickLaundry)
+                .where(quickLaundry.ordersDetailId.eq(ordersDetailId)).execute();
+        log.info("Removed QuickLaundry");
+    }
+
 }

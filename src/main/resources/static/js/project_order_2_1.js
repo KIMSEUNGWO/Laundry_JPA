@@ -81,7 +81,7 @@ function callback(map){
 
         // 비어있을때 선택해제
         if (map.empty){
-            opener.document.querySelector('#drycleaning').checked = true;
+            opener.document.querySelector('#drycleaning').checked = false;
             opener.document.querySelector('#dryBtn svg').style.fill = ''
             opener.document.querySelector('#dryBtn').classList.remove('select1');
         } else {

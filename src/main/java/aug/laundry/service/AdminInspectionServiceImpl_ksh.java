@@ -31,7 +31,7 @@ public class AdminInspectionServiceImpl_ksh implements AdminInspectionService {
     private String fileDir;
 
     private final AdminInspectionDao adminInspectionDao;
-    private final FileUploadService_ksh fileUpload;
+    private final FileUploadService fileUpload;
 
     @Override
     public List<AdminInspectionDto> getInspectionList(Criteria cri, Long orderStatus) {

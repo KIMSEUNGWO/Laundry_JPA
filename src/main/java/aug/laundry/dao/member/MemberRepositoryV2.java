@@ -1,10 +1,10 @@
 package aug.laundry.dao.member;
 
-import aug.laundry.dao.login.JpaMemberRepository;
+import aug.laundry.dao.jpaRepository.JpaMemberRepository;
 import aug.laundry.dao.login.LoginMapper;
 import aug.laundry.domain.*;
 import aug.laundry.dto.ConfirmIdDto;
-import com.querydsl.core.types.Predicate;
+import aug.laundry.enums.category.Pass;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -164,6 +164,12 @@ public class MemberRepositoryV2 implements MemberRepository {
     @Override
     public boolean inviteCodeCheck(String inviteCode){
         return jpaMemberRepository.findByMemberMyInviteCode(inviteCode).isEmpty();
+    }
+
+    @Override
+    public Pass isPass(Long memberId) {
+        Optional<Member> findMember = jpaMemberRepository.findById(memberId);
+        return findMember.isPresent() ? Pass.PASS : Pass.COMMON;
     }
 
 
