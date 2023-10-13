@@ -14,9 +14,6 @@ import java.util.List;
 public class MemberDao {
 
     private final MemberMapper memberMapper;
-    public MemberDto selectOne(Long memberId){
-        return memberMapper.selectOne(memberId);
-    }
 
     public int giveCoupon(@Param("memberId")Long memberId, @Param("couponId")Long couponId){
         return memberMapper.giveCoupon(memberId,couponId);

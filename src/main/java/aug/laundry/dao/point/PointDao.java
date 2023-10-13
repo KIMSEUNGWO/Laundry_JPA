@@ -1,6 +1,7 @@
 package aug.laundry.dao.point;
 
 import aug.laundry.domain.Point;
+import aug.laundry.domain.QMember;
 import aug.laundry.domain.QPoint;
 import aug.laundry.jpaRepository.JpaPointRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -10,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
-
+import static aug.laundry.domain.QPoint.*;
 
 @Repository
 @Slf4j
@@ -28,25 +29,22 @@ public class PointDao {
     }
 
     public Integer findByMemberId(Long memberId) {
-        return pointMapper.findByMemberId(memberId);
-    }
-    public int registerPoint(Long memberId) {
-        Point point = new Point();
-        point.setMemberId(memberId);
-        point.setPointStack(1000);
-        point.setPointStackReason("회원가입");
-        point.setPointNow(1000);
-        jpaPointRepository.save(point);
-        return 1;
+        return query.select(point.pointNow)
+                .from(point)
+                .where(point.memberId.eq(memberId))
+                .orderBy(point.pointId.desc())
+                .fetchFirst();
     }
 
     public int addPoint(Long memberId, Integer pointStack, String reason){
-        Integer myCurrentPointPlusPoint =
-                query.select(QPoint.point.pointNow)
-                .from(QPoint.point)
-                .where(QPoint.point.memberId.eq(memberId))
-                .orderBy(QPoint.point.pointId.desc())
-                .fetchFirst() + pointStack;
+        // 가장 최근 point + pointStack = pointNow
+        Integer myPointNow = query.select(point.pointNow)
+                .from(point)
+                .where(point.memberId.eq(memberId))
+                .orderBy(point.pointId.desc())
+                .fetchFirst();
+        Integer myCurrentPointPlusPoint = ( myPointNow == null ) ? pointStack : myPointNow + pointStack ;
+
         Point p = new Point();
         p.setMemberId(memberId);
         p.setPointStack(pointStack);

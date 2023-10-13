@@ -1,6 +1,6 @@
 package aug.laundry.commom;
 
-public class ConstOrderStatus {
+public abstract class ConstOrderStatus {
 
     public static final int ORDERS_CANCEL = 1;
     public static final int ORDERS_SUCCESS = 2;

@@ -30,7 +30,12 @@ public class MemberServiceImpl_ksw implements MemberService {
     private final PointDao pointDao;
 
     public Member selectOne(Long memberId){
-        return memberRepository.findById(memberId).get();
+        Optional<Member> findMember = memberRepository.findById(memberId);
+        if (findMember.isPresent()) {
+            return findMember.get();
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -57,26 +62,24 @@ public class MemberServiceImpl_ksw implements MemberService {
         // 회원가입
         Member registerMember = memberRepository.registerUser(memberDto);
 
-        // 추천인 코드 작성 시 포인트 적립
-        int res = pointDao.registerPoint(registerMember.getMemberId());
+        // 회원가입 포인트 적립
+        pointDao.addPoint(registerMember.getMemberId(), 1000, "회원가입");
 
         // 추천인 코드를 작성한 경우 신규회원, 추천한 회원에게 포인트 적립
-        if(memberDto.getMemberInviteCode() != null && !memberDto.getMemberInviteCode().isBlank()){
-            System.out.println("추천인 코드 : " + memberDto.getMemberInviteCode());
+        if(registerMember.getMemberInviteCode() != null && !registerMember.getMemberInviteCode().isBlank()){
+            System.out.println("추천인 코드 : " + registerMember.getMemberInviteCode());
             try {
                 // 추천인 포인트 적립
                 Long recommanderId = memberRepository.findRecommender(memberDto.getMemberInviteCode());
                 pointDao.addPoint(recommanderId, 5000, "신규회원에게 추천");
                 // 뉴비 포인트 적립
-                pointDao.addPoint(memberDto.getMemberId(), 5000, "추천인 코드 작성");
+                pointDao.addPoint(registerMember.getMemberId(), 5000, "추천인 코드 작성");
             }catch (Exception e){
                 e.printStackTrace();
             }
 
         }
     }
-
-
 
     public List<Member> confirmId(String memberName, String memberPhone, String memberAccount){
         // 전화번호 형식변경 후 아이디 list에 담기

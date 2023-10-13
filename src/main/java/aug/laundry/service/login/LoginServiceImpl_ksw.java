@@ -8,7 +8,7 @@ import aug.laundry.dao.point.PointDao;
 import aug.laundry.domain.*;
 import aug.laundry.dto.*;
 import aug.laundry.service.ApiExamMemberProfile;
-import aug.laundry.commom.BCrypt_kgw;
+import aug.laundry.commom.BCrypt;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -40,7 +40,7 @@ public class LoginServiceImpl_ksw implements LoginService {
     private final LoginRepository loginRepository;
     private final MemberRepository memberRepository;
     private final MemberDao memberDao;
-    private final BCrypt_kgw bc;
+    private final BCrypt bc;
     private final PointDao pointDao;
 
 
@@ -97,7 +97,7 @@ public class LoginServiceImpl_ksw implements LoginService {
                 memberDao.giveCoupon(memberId, welcomeCoupon);
 
                 //포인트 적립
-                pointDao.registerPoint(memberId);
+                pointDao.addPoint(memberId, 1000, "회원가입");
                 
                 //로그인 시간 갱신
                 loginRepository.renewLoginTime(memberId);
@@ -296,7 +296,7 @@ public class LoginServiceImpl_ksw implements LoginService {
                 memberDao.giveCoupon(memberId, welcomeCoupon);
 
                 //포인트 적립
-                pointDao.registerPoint(memberId);
+                pointDao.addPoint(memberId, 1000, "회원가입");
 
                 //로그인 시간 갱신
                 loginRepository.renewLoginTime(memberId);

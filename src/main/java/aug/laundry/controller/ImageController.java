@@ -19,7 +19,6 @@ public class ImageController {
     @ResponseBody
     public byte[] getImage(@PathVariable String imageName) throws IOException {
         Resource resource = new ClassPathResource("static/images/" + imageName);
-        log.info("getImage Controller ");
         return Files.readAllBytes(resource.getFile().toPath());
     }
 
@@ -27,7 +26,6 @@ public class ImageController {
     @ResponseBody
     public byte[] getRepairImage(@PathVariable String imageName) throws IOException {
         Resource resource = new ClassPathResource("static/images/repair_images/" + imageName);
-        log.info("getImage Controller ");
         return Files.readAllBytes(resource.getFile().toPath());
     }
 }

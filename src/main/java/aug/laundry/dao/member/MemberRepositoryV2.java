@@ -1,6 +1,6 @@
 package aug.laundry.dao.member;
 
-import aug.laundry.commom.BCrypt_kgw;
+import aug.laundry.commom.BCrypt;
 import aug.laundry.jpaRepository.JpaMemberRepository;
 import aug.laundry.dao.login.LoginMapper;
 import aug.laundry.domain.*;
@@ -32,9 +32,9 @@ public class MemberRepositoryV2 implements MemberRepository {
     private final LoginMapper loginMapper; // mybatis
     private final JpaMemberRepository jpaMemberRepository; // jpa
     private final JPAQueryFactory query;
-    private final BCrypt_kgw bc;
+    private final BCrypt bc;
 
-    public MemberRepositoryV2(LoginMapper loginMapper, JpaMemberRepository jpaMemberRepository, BCrypt_kgw bc, EntityManager em) {
+    public MemberRepositoryV2(LoginMapper loginMapper, JpaMemberRepository jpaMemberRepository, BCrypt bc, EntityManager em) {
         this.loginMapper = loginMapper;
         this.jpaMemberRepository = jpaMemberRepository;
         this.query = new JPAQueryFactory(em);
@@ -134,10 +134,12 @@ public class MemberRepositoryV2 implements MemberRepository {
 
     @Override
     public Long findRecommender(String inviteCode) {
-        return query.select(member.memberId)
-                .from(member)
-                .where(member.memberMyInviteCode.eq(inviteCode))
-                .fetchFirst();
+        Optional<Member> byMemberMyInviteCode = jpaMemberRepository.findByMemberMyInviteCode(inviteCode);
+        if (byMemberMyInviteCode.isPresent()) {
+            return byMemberMyInviteCode.get().getMemberId();
+        } else {
+            return null;
+        }
 
     }
 

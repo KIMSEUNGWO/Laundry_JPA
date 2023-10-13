@@ -1,11 +1,15 @@
 package aug.laundry.dao.mypage;
 
+import aug.laundry.domain.Member;
 import aug.laundry.dto.*;
+import aug.laundry.jpaRepository.JpaMemberRepository;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Slf4j
@@ -13,14 +17,27 @@ import java.util.List;
 public class MypageDao {
 
   private final MypageMapper mypageMapper;
+  private final JpaMemberRepository jpaMemberRepository;
 
-  public String findByName(Long memberId){ return mypageMapper.findByName(memberId); }
+  public String findByName(Long memberId){
+    Optional<Member> findMember = jpaMemberRepository.findById(memberId);
+    if (findMember.isPresent()) {
+      return findMember.get().getMemberName();
+    }
+      return null;
+  }
 
   public MypageDto findByNameAndPass(Long memberId){
     return mypageMapper.findByNameAndPass(memberId);
   }
 
-  public String findByInviteCode(Long memberId){ return mypageMapper.findByInviteCode(memberId);}
+  public String findByInviteCode(Long memberId){
+    Optional<Member> findMember = jpaMemberRepository.findById(memberId);
+    if (findMember.isPresent()) {
+      return findMember.get().getMemberMyInviteCode();
+    }
+    return null;
+  }
 
   public MypageDto findByInfo(Long memberId){ return mypageMapper.findByInfo(memberId); }
 

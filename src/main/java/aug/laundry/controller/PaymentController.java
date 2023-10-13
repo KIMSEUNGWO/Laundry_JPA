@@ -179,7 +179,7 @@ public class PaymentController {
 
     private void addBonusPoint(Long finalPrice, Long memberId) {
         MemberShip memberShip = memberService.isPass(memberId);
-        Long bonusPoint = memberShip.applyPoint(finalPrice);
+        Long bonusPoint = memberShip.apply(finalPrice);
         paymentService.addBonusPoint(memberId, bonusPoint);
     }
 
