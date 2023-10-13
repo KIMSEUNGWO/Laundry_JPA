@@ -2,6 +2,7 @@ package aug.laundry.service;
 
 import aug.laundry.dao.mypage.MypageDao;
 import aug.laundry.dto.*;
+import aug.laundry.jpaRepository.JpaMemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

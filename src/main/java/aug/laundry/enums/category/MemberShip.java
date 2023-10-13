@@ -21,11 +21,4 @@ public class MemberShip {
         }
     }
 
-    public Long applyPoint(Long price){
-        if (this.check == Pass.PASS) {
-            return PointCalculator.PASS.calculate(price);
-        } else {
-            return PointCalculator.COMMON.calculate(price);
-        }
-    }
 }

@@ -1,12 +1,12 @@
 package aug.laundry.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class MypageDto {
 
   private Long memberId;
@@ -20,20 +20,4 @@ public class MypageDto {
   private String memberMyInviteCode;
   private String memberAddressDetails;
 
-  public MypageDto(){
-
-  }
-
-  public MypageDto(Long memberId, String memberName, String memberPhone, String memberZipcode, String memberAddress, Long subscriptionId, String subscriptionExpireDate, Long gradeId, String memberMyInviteCode, String memberAddressDetails) {
-    this.memberId = memberId;
-    this.memberName = memberName;
-    this.memberPhone = memberPhone;
-    this.memberZipcode = memberZipcode;
-    this.memberAddress = memberAddress;
-    this.subscriptionId = subscriptionId;
-    this.subscriptionExpireDate = subscriptionExpireDate;
-    this.gradeId = gradeId;
-    this.memberMyInviteCode = memberMyInviteCode;
-    this.memberAddressDetails = memberAddressDetails;
-  }
 }

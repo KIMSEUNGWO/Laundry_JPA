@@ -30,7 +30,12 @@ public class MemberServiceImpl_ksw implements MemberService {
     private final PointDao pointDao;
 
     public Member selectOne(Long memberId){
-        return memberRepository.findById(memberId).get();
+        Optional<Member> findMember = memberRepository.findById(memberId);
+        if (findMember.isPresent()) {
+            return findMember.get();
+        } else {
+            return null;
+        }
     }
 
     @Override
